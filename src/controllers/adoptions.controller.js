@@ -4,7 +4,9 @@ import adoptionsDTO from "../DTO/adoption.dto.js"
 export const getAllAdoptions = async (req, res) => {
    try {
       const adoptionss = await adoptionsService.getAll()
-      return res.status(200).json(adoptionss.map(adoptionsDTO.fromDB))
+      return res.status(200).json({
+         payload: adoptionss.map(adoptionsDTO.fromDB)
+      })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
          error: error.statusCode ? error.message : "Internal server error"
@@ -17,7 +19,9 @@ export const getAdoptionByIdByPopulated = async (req, res) => {
 
    try {
       const adoptions = await adoptionsService.getByIdByPopulated(uid)
-      return res.status(200).json(adoptionsDTO.fromDB(adoptions))
+      return res.status(200).json({
+         payload: adoptionsDTO.fromDB(adoptions)
+      })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
          error: error.statusCode ? error.message : "Internal server error"
@@ -30,7 +34,9 @@ export const getAdoptionById = async (req, res) => {
 
    try {
       const adoptions = await adoptionsService.getById(uid)
-      return res.status(200).json(adoptionsDTO.fromDB(adoptions))
+      return res.status(200).json({
+         payload: adoptionsDTO.fromDB(adoptions)
+      })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
          error: error.statusCode ? error.message : "Internal server error"
@@ -47,7 +53,7 @@ export const saveAdoption = async (req, res) => {
 
       return res.status(201).json({
          message: "Adoption created successfully",
-         adoptionsCreate
+         payload: adoptionsCreate
       })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
@@ -57,16 +63,16 @@ export const saveAdoption = async (req, res) => {
 }
 
 export const updateAdoption = async (req, res) => {
-   const { uid } = req.params
+   const { aid } = req.params
    const data = req.body
 
    try {
-      const adoptions = await adoptionsService.update(uid, data)
+      const adoptions = await adoptionsService.update(aid, data)
       const adoptionsUpdate = adoptionsDTO.fromDB(adoptions)
 
       return res.status(200).json({
          message: "Adoption update successfully",
-         adoptionsUpdate
+         payload: adoptionsUpdate
       })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
@@ -84,7 +90,7 @@ export const deleteAdoption = async (req, res) => {
 
       return res.status(200).json({
          message: "Adoption delete successfully",
-         adoptionsDelete
+         payload: adoptionsDelete
       })
    } catch (error) {
       return res.status(error.statusCode || 500).json({

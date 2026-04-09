@@ -17,6 +17,21 @@ export const getAllUsers = async (req, res) => {
    }
 }
 
+export const getUserByEmail = async (req, res) => {
+   const { email } = req.params
+
+   try {
+      const user = await userService.getByEmail(email)
+      return res.status(200).json({
+         payload: userDTO.fromDB(user)
+      })
+   } catch (error) {
+      return res.status(error.statusCode || 500).json({
+         error: error.statusCode ? error.message : "Internal server error"
+      })
+   }
+}
+
 export const getUserById = async (req, res) => {
    const { uid } = req.params
 
