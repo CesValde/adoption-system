@@ -77,7 +77,7 @@ export const preventAuth = (req, res, next) => {
 
    try {
       jwt.verify(token, process.env.JWT_SECRET)
-      return res.redirect("/api/session/current")
+      return res.redirect("/api/sessions/current")
    } catch {
       return next()
    }
