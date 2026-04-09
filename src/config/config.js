@@ -4,6 +4,7 @@ dotenv.config()
 export default {
    port: process.env.PORT,
    atlasUrl: process.env.ATLAS_URL,
+   atlasUrlTest: process.env.ATLAS_URL_TEST,
    jwtSecret: process.env.JWT_SECRET,
    cookieSecret: process.env.COOKIE_SECRET
 }
