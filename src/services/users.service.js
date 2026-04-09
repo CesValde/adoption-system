@@ -48,9 +48,9 @@ class UserService {
 
    async create(user) {
       try {
-         const { first_name, last_name, email, password, age, role } = user
+         const { first_name, last_name, email, password, role } = user
 
-         if (!first_name || !last_name || !email || !password || age == null) {
+         if (!first_name || !last_name || !email || !password) {
             throw new AppError("Missing values", 400)
          }
 
@@ -60,7 +60,6 @@ class UserService {
             first_name,
             last_name,
             email,
-            age: Number(age),
             role: role ?? "user",
             password: hashedPassword
          }
