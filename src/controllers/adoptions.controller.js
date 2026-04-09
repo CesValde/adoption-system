@@ -1,5 +1,5 @@
-import adoptionsService from "../Service/adoptions.service.js"
-import adoptionsDTO from "../dtos/adoptions.dto.js"
+import adoptionsService from "../services/adoptions.service.js"
+import adoptionsDTO from "../DTO/adoption.dto.js"
 
 export const getAllAdoptions = async (req, res) => {
    try {
