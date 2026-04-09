@@ -1,11 +1,14 @@
 import userService from "../services/users.service.js"
-import userDTO from "../dtos/user.dto.js"
+import userDTO from "../DTO/user.dto.js"
 import crypto from "crypto"
 
 export const getAllUsers = async (req, res) => {
    try {
       const users = await userService.getAll()
-      return res.status(200).json(users.map(userDTO.fromDB))
+
+      return res.status(200).json({
+         payload: users.map(userDTO.fromDB)
+      })
    } catch (error) {
       console.log(error)
       return res.status(error.statusCode || 500).json({
@@ -19,7 +22,10 @@ export const getUserById = async (req, res) => {
 
    try {
       const user = await userService.getById(uid)
-      return res.status(200).json(userDTO.fromDB(user))
+
+      return res.status(200).json({
+         payload: userDTO.fromDB(user)
+      })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
          error: error.statusCode ? error.message : "Internal server error"
@@ -32,11 +38,9 @@ export const saveUser = async (req, res) => {
 
    try {
       const user = await userService.create(data)
-      const userCreate = userDTO.fromDB(user)
 
       return res.status(201).json({
-         message: "User created successfully",
-         userCreate
+         payload: userDTO.fromDB(user)
       })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
@@ -51,11 +55,9 @@ export const updateUser = async (req, res) => {
 
    try {
       const user = await userService.update(uid, data)
-      const userUpdate = userDTO.fromDB(user)
 
       return res.status(200).json({
-         message: "User update successfully",
-         userUpdate
+         payload: userDTO.fromDB(user)
       })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
@@ -76,9 +78,11 @@ export const resetPassword = async (req, res) => {
 
       await userService.resetPassword(hashedToken, password)
 
-      res.json({ message: "Password updated successfully" })
+      return res.status(200).json({
+         message: "Password updated successfully"
+      })
    } catch (error) {
-      res.status(error.statusCode || 500).json({
+      return res.status(error.statusCode || 500).json({
          error: error.message || "Error resetting password"
       })
    }
@@ -89,11 +93,9 @@ export const deleteUser = async (req, res) => {
 
    try {
       const user = await userService.delete(uid)
-      const userDelete = userDTO.fromDB(user)
 
       return res.status(200).json({
-         message: "User delete successfully",
-         userDelete
+         payload: userDTO.fromDB(user)
       })
    } catch (error) {
       return res.status(error.statusCode || 500).json({
