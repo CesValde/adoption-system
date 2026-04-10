@@ -9,6 +9,11 @@ class UserDTO {
          email: user.email,
          age: user.age,
          role: user.role,
+         pets: user.pets
+            ? user.pets.map((p) => ({
+                 id: p._id
+              }))
+            : []
       }
    }
 }

@@ -6,7 +6,8 @@ class PetDTO {
          id: pet._id,
          name: pet.name,
          type: pet.type,
-         age: pet.age
+         age: pet.age,
+         status: pet.status
       }
    }
 }
