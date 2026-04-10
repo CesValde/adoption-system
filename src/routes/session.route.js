@@ -23,26 +23,6 @@ const router = Router()
 
 /**
  * @swagger
- * /api/sessions/profile:
- *   get:
- *     summary: Obtener perfil del usuario autenticado
- *     tags: [Sessions]
- *     security:
- *       - cookieAuth: []
- *     responses:
- *       200:
- *         description: Perfil del usuario
- *       401:
- *         description: No autorizado
- */
-router.get(
-   "/profile",
-   passportCall("current"),
-   sessionController.loginSucessfull
-)
-
-/**
- * @swagger
  * /api/sessions/current:
  *   get:
  *     summary: Obtener usuario actual
