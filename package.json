@@ -5,8 +5,10 @@
    "main": "app.js",
    "type": "module",
    "scripts": {
+      "start": "node src/app.js",
       "dev": "nodemon src/app.js",
-      "test": "mocha ./src/tests/**/*.test.js"
+      "test": "mocha ./src/tests/**/*.test.js",
+      "adoption": "mocha ./src/tests/adoptions.test.js"
    },
    "keywords": [],
    "author": "",
