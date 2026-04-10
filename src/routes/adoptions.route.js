@@ -78,6 +78,39 @@ router.get(
 
 /**
  * @swagger
+ * /api/adoptions/{aid}:
+ *   get:
+ *     summary: Obtener una adopción por ID con datos poblados de usuario y mascota
+ *     tags: [Adoptions]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - name: aid
+ *         in: path
+ *         required: true
+ *         description: ID de la adopción
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Adopción encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Adoption'
+ *       404:
+ *         description: Adopción no encontrada
+ *       401:
+ *         description: No autorizado
+ */
+router.get(
+   "/:aid",
+   passportCall("current"),
+   adoptionsController.getAdoptionByIdByPopulated
+)
+
+/**
+ * @swagger
  * /api/adoptions:
  *   post:
  *     summary: Crear una nueva adopción
@@ -90,16 +123,7 @@ router.get(
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - user
- *               - pet
- *             properties:
- *               user:
- *                 type: string
- *                 description: ID del usuario
- *               pet:
- *                 type: string
- *                 description: ID de la mascota
+ *
  *     responses:
  *       201:
  *         description: Adopción creada
