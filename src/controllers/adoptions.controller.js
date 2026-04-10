@@ -15,10 +15,10 @@ export const getAllAdoptions = async (req, res) => {
 }
 
 export const getAdoptionByIdByPopulated = async (req, res) => {
-   const { uid } = req.params
+   const { aid } = req.params
 
    try {
-      const adoptions = await adoptionsService.getByIdByPopulated(uid)
+      const adoptions = await adoptionsService.getByIdByPopulated(aid)
       return res.status(200).json({
          payload: adoptionsDTO.fromDB(adoptions)
       })
@@ -78,6 +78,20 @@ export const updateAdoption = async (req, res) => {
       return res.status(error.statusCode || 500).json({
          error: error.statusCode ? error.message : "Internal server error"
       })
+   }
+}
+
+export const completeAdoption = async (req, res, next) => {
+   try {
+      const { aid } = req.params
+      const result = await adoptionsService.completeAdoption(aid)
+
+      return res.status(200).json({
+         message: "Adoption complete successfully",
+         payload: result
+      })
+   } catch (error) {
+      next(error)
    }
 }
 
