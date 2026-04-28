@@ -8,6 +8,7 @@ const baseMongooseOpts = {
 export const connectAtlasMongoDB = async () => {
    try {
       await mongoose.connect(config.atlasUrl, baseMongooseOpts)
+      // await mongoose.connect(config.atlasUrlTest, baseMongooseOpts)
       console.log(`Conectado a Mongo Atlas`)
    } catch (err) {
       console.error(`Error conectando a MongoDB: ${err}`)
